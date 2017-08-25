@@ -1,0 +1,59 @@
+﻿<Graph ClassName="InventoryLineMaintPortalPXExt" Source="#CDATA" IsNew="True" FileType="NewFile">
+    <CDATA name="Source"><![CDATA[using System;
+using PX.Data;
+using SP.Objects.IN;
+using System.Collections;
+using PX.Objects.AR;
+using PX.Objects.IN;
+using PX.Objects.CS;
+
+namespace PXPortalCustomizationExtPkg
+{
+    public class InventoryLineMaintPortalPXExt : PXGraphExtension<InventoryLineMaint>
+    {
+        public virtual IEnumerable filteredItems()
+        {
+            BqlCommand cmd;
+
+            if (Base.Filter.Current.CategoryID == null)
+            {
+                cmd = BqlCommand.CreateInstance(typeof(Select2<InventoryLines,
+                    InnerJoin<ARSalesPrice, On<ARSalesPrice.inventoryID, Equal<InventoryLines.inventoryID>>>,
+                    Where<ARSalesPrice.priceType, Equal<PriceTypes.customer>,
+                            And<ARSalesPrice.customerID, Equal<Required<ARSalesPrice.customerID>>,
+                        And<
+                            Where<Current<InventoryLineFilter.isShowAvailableItem>, IsNull,
+                                Or<Current<InventoryLineFilter.isShowAvailableItem>, Equal<False>,
+                                    Or<InventoryLines.stkItem, Equal<False>,
+                                        Or<InventoryLines.qtyOnHand, Greater<decimal0>>>>>>>>>));
+            }
+            else
+            {
+                cmd = BqlCommand.CreateInstance(typeof(Select2<InventoryLines,
+                    InnerJoin<INItemCategory, On<INItemCategory.inventoryID, Equal<InventoryLines.inventoryID>>,
+                    InnerJoin<ARSalesPrice, On<ARSalesPrice.inventoryID, Equal<InventoryLines.inventoryID>>>>,
+                    Where<INItemCategory.categoryID, Equal<Current<InventoryLineFilter.categoryID>>,
+                        And<ARSalesPrice.priceType, Equal<PriceTypes.customer>,
+                            And<ARSalesPrice.customerID, Equal<Required<ARSalesPrice.customerID>>,
+                        And<
+                            Where<Current<InventoryLineFilter.isShowAvailableItem>, IsNull,
+                                Or<Current<InventoryLineFilter.isShowAvailableItem>, Equal<False>,
+                                    Or<InventoryLines.stkItem, Equal<False>,
+                                        Or<InventoryLines.qtyOnHand, Greater<decimal0>>>>>>>>>>));
+            }
+
+            var startRow = PXView.StartRow;
+            int totalRows = 0;
+
+            var list = new PXView(Base, false, cmd).
+                Select(null, new object[] { Base.currentCustomer.BAccountID.Value }, PXView.Searches, PXView.SortColumns, PXView.Descendings,
+                    PXView.Filters,
+                    ref startRow, PXView.MaximumRows, ref totalRows);
+
+            PXView.StartRow = 0;
+
+            return list;
+        }
+    }
+}]]></CDATA>
+</Graph>

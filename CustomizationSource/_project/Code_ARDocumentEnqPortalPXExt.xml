@@ -1,0 +1,48 @@
+﻿<Graph ClassName="ARDocumentEnqPortalPXExt" Source="#CDATA" IsNew="True" FileType="NewFile">
+    <CDATA name="Source"><![CDATA[using PX.Data;
+using PX.Objects.AR;
+using SP.Objects.AR;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace PXPortalCustomizationExtPkg
+{
+    [DashboardType((int)DashboardTypeAttribute.Type.Default,
+                  PX.Objects.GL.TableAndChartDashboardTypeAttribute._AMCHARTS_DASHBOART_TYPE)]
+    public class ARDocumentEnqPortalPXExt : PXGraphExtension<ARDocumentEnqExt, ARDocumentEnq>
+    {
+        public void ARDocumentFilter_BranchID_FieldDefaulting(PXCache sender, PXFieldDefaultingEventArgs e)
+        {
+            ARDocumentEnq.ARDocumentFilter data = (ARDocumentEnq.ARDocumentFilter)e.Row;
+            if (data != null)
+            {
+                e.NewValue = null;
+                e.Cancel = true;
+            }
+        }
+
+        public PXAction<ARDocumentEnq.ARDocumentFilter> aRAgedPastDueReportportal;
+        [PXUIField(DisplayName = "Aging Report", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        public virtual IEnumerable ARAgedPastDueReportportal(PXAdapter adapter)
+        {
+            ARDocumentEnq.ARDocumentFilter filter = Base.Filter.Current;
+            if (filter != null)
+            {
+                PXResultset<Customer> res = PXSelect<Customer,
+                    Where<Customer.consolidatingBAccountID, Equal<Current<ARDocumentEnq.ARDocumentFilter.customerID>>>,
+                    OrderBy<Asc<Customer.parentBAccountID>>>.Select(Base);
+                bool includeChild = filter.IncludeChildAccounts == true && res.Count > 1;
+
+                Dictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters["BranchID"] = null;
+                parameters["CustomerID"] = ((Customer)res).AcctCD;
+                parameters["IncludeChild"] = includeChild.ToString();
+
+                throw new PXReportRequiredException(parameters, "AR631000", PX.Objects.AR.Messages.ARAgedPastDueReport);
+            }
+            return adapter.Get();
+        }
+    }
+}
+]]></CDATA>
+</Graph>

@@ -1,0 +1,58 @@
+﻿<Graph ClassName="SOOrderEntryPortalPXExt" Source="#CDATA" IsNew="True" FileType="NewFile">
+    <CDATA name="Source"><![CDATA[using PX.Data;
+using SP.Objects.IN;
+using PX.Objects.SO;
+using PX.Objects.CR;
+using PX.Objects.AR;
+using SP.Objects;
+using CRLocation = PX.Objects.CR.Standalone.Location;
+
+namespace PXPortalCustomizationExtPkg
+{
+    public class SOOrderEntryPortalPXExt : PXGraphExtension<SOOrderEntryExt, SOOrderEntry>
+    {
+        public void SOOrder_BranchID_FieldUpdating(PXCache sender, PXFieldUpdatingEventArgs e, PXFieldUpdating BaseInvoke)
+        {
+            if (BaseInvoke != null)
+                BaseInvoke(sender, e);
+
+            int? customerShippingBranch = GetCustomersShippingBranch();
+            if (customerShippingBranch.HasValue)
+            {
+                e.NewValue = customerShippingBranch.Value;
+                e.Cancel = true;
+            }
+        }
+
+        public void SOLine_RowInserting(PXCache sender, PXRowInsertingEventArgs e, PXRowInserting BaseInvoke)
+        {
+            if (BaseInvoke != null)
+                BaseInvoke(sender, e);
+
+            SOOrder order = (SOOrder)Base.Document.Current;
+            SOLine line = (SOLine)e.Row;
+            if (order == null || line == null) return;
+
+            if (order.BranchID.HasValue && order.BranchID != PXAccess.GetBranchID())
+            {
+                line.BranchID = order.BranchID;
+            }
+        }
+
+        public int? GetCustomersShippingBranch()
+        {
+            Customer cust = ReadBAccount.ReadCurrentCustomer();
+            if (cust == null) return null;
+
+            CRLocation crlocation = PXSelectReadonly2<CRLocation,
+                                                    LeftJoin<Address, On<CRLocation.bAccountID, Equal<Address.bAccountID>,
+                                                        And<CRLocation.defAddressID, Equal<Address.addressID>>>,
+                                                    LeftJoin<BAccountR, On<BAccountR.bAccountID, Equal<CRLocation.bAccountID>>>>,
+                                                 Where<CRLocation.bAccountID, Equal<Required<CRLocation.bAccountID>>,
+                                                        And<CRLocation.locationID, Equal<Required<CRLocation.locationID>>>>>
+                                    .Select(Base, cust.BAccountID, cust.DefLocationID);
+            return (crlocation != null) ? crlocation.CBranchID : null;
+        }
+    }
+}]]></CDATA>
+</Graph>

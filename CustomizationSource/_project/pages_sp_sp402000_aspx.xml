@@ -1,0 +1,13 @@
+﻿<Page path="~/pages/sp/sp402000.aspx" pageSource="rVdtT+M4EP7MSvsfopz4eLSwt7o71KIrLS+VSqmaLvDt5CZD613HDrZT6H64334zdkJTaCFHDyFwJvPm8TPPOK39v4IRm0EwYHKW46Iddn8JgytmLGh6cc4Fyv5prCSmca502gPLuDhInTgMOrlVZwuQ9pZryLN2aHUOYXDDBE+YhTE85GBsO7xnwqC8q5LCczT6rXnUbDYPmMmeDmITBn05B82taYcU7e9SIQwm3JLFN2lpkbi8w2D/5POnz59auA+f4mSZQXDDtc2ZGDE7r5E8uWhh/OOukhb3EPR77TDG9SFl6kQjwWK4VCIBTS+zeS8KA51LhnuKQC/QDTrZa2VPx6O7HrMsUrmOwXlKzLOq8aqYn+FT2owvE+U8ZCk+j+4OrqffIbbmoDPG356K8xTjn8mHMBhpnjK9vOHw2A6xfC55jLpHOxsolpzCnC240uhHZbnAwkdsAQmeAlY/DIxdUsx7oZg9FnBvXc57rS4TYsriH12VpkwmxknLvUQv3gY+0S6TMYjKTs7dyTbq2I40YJa5GeE5qyQMIsu0HcLjhVYEnYmrySVPYAJPtnz+SKAh2pdBdvPXgwxkci0vNE/a4Qz/hkUMOo3ylCpeC6B/2O2ILT/stTghDQiAvlwoHsNOPjCXHfLojE+ZILScLru5sSoFPYZMaVvvDEubS47/9bIw/RAcOuPODJIRdn0vh/+Sgze8zq2xKORytlsWY5hxYp5dvCAXSBuBQKqAZANSPMjX8VWqmSJEq7Gp81uNFyS2IraJUuKUacdqFtdTpg9fcVv0g0tSGCIVzZjlSobBqYshiJkmmkmTMe3SLeL6OAVX+tT6FlJTZFlZD9hS5UjQJOkIPpPtcEBE5qFYpF6k6SQJX5S8Fwtg+jgQz/qtRoX0t82Ao+0z4Hz7CKApQ8zg3Nzjw6syrepbzojIp/nzVy4TeDoODmno3fKEZhiu973NFaRT0Cv+77KMakw5EBhcuXtwz3JhKW+tBPmHpOyjfg/nDZv2KQb6pSC+tBNIMxoZJ4i94PmnAkVf+3Eu/FirCo5eo4A4HY88T2UJxgGbgjDFhga+rJhexH/iru/uBnQo6xGHOe31LOH+OLAFEc4Fo3Vk0p0zTVeADZU95yAQ8Zv1zyTDHknKfgtoLBRgGvPZ/AUpvEoCSREf8ByUQex+kyzLBCdeKVhyezrvWe6Y2BBsQbVvJVHVqhWwHgQ2EME7EIheQKAOAHwFBzzlNQpdqO1Y1c4C74rkwTt9K+wr1ZqhW43n5nOPHezjBbfLsvvx9gKkjquTVqN8W2G8km7qktqX7aR2sZ3UaIo4F/6i8i6hlUkffv2SPW3hN9rvGsd1HIeZkTLc89pEZRWWW82woJN8R06ju6/HD32DoFQI9YhCnNIl6iiGE0c4AOJ5KS4HVXGt7suHHD9eUL6UcSW80x3j14vmsXUHbUqpc+qJuBAVUwoWCPMqqqh0TrrG4avNeF28irt2KUyrxv5FFWxoTN8N/usBH7XKeupRDvBqsRobR02qfKOOvzHcD6f6pemAy/J2sO3SUcs7auMTPLv/s35ieFn7qClSkM3NmyX6/ai2t2vNZ7iPTmo3dPJHSo7OkIr/P2c9MPHK9o/6ttXLwaobq+Z4V1yDZnkTK5mnSlD+VQH/xjr+C76rdEiL+pY62FES45I64xY5Qj1WCNQ33BWXK1JpUnZ7eysWpCAbGPBf">
+    <PXGridLevel DataMember="Documents" ParentId="phG_grid_Levels#0" TypeFullName="PX.Web.UI.PXGridLevel">
+        <Children Key="Columns">
+            <AddItem>
+                <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                    <Prop Key="DataField" Value="BranchID" />
+                    <Prop Key="Width" Value="120" />
+                </PXGridColumn>
+            </AddItem>
+            <PXGridColumn DataField="DocDate" OriginalIndex="2" />
+        </Children>
+    </PXGridLevel>
+</Page>
